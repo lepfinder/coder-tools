@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col bg-background overflow-hidden`}
       >
         <Navbar />
-        <main className="flex-1 container max-w-screen-2xl mx-auto px-4 py-6 overflow-auto">
+        <main className="flex-1 px-4 py-6 overflow-auto">
           {children}
         </main>
         <Footer />
