@@ -3,7 +3,8 @@ import { JsonFormatter } from "@/components/tools/JsonFormatter";
 import { TimestampConverter } from "@/components/tools/TimestampConverter";
 import { Base64Converter } from "@/components/tools/Base64Converter";
 import { TextDiff } from "@/components/tools/TextDiff";
-import { FileJson, Clock, Binary, FileDiff } from "lucide-react";
+import { SetOperations } from "@/components/tools/SetOperations";
+import { FileJson, Clock, Binary, FileDiff, Network } from "lucide-react";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
 
       <Tabs defaultValue="json" className="w-full space-y-6">
         <div className="flex justify-center">
-          <TabsList className="grid w-full max-w-2xl grid-cols-2 md:grid-cols-4 h-auto p-1">
+          <TabsList className="grid w-full max-w-3xl grid-cols-2 md:grid-cols-5 h-auto p-1">
             <TabsTrigger value="json" className="py-2 gap-2">
               <FileJson className="h-4 w-4" />
               <span className="hidden sm:inline">JSON Format</span>
@@ -38,6 +39,11 @@ export default function Home() {
               <span className="hidden sm:inline">Text Diff</span>
               <span className="sm:hidden">Diff</span>
             </TabsTrigger>
+            <TabsTrigger value="sets" className="py-2 gap-2">
+              <Network className="h-4 w-4" />
+              <span className="hidden sm:inline">Set Ops</span>
+              <span className="sm:hidden">Sets</span>
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -55,6 +61,10 @@ export default function Home() {
 
         <TabsContent value="diff" className="outline-none mt-0">
           <TextDiff />
+        </TabsContent>
+
+        <TabsContent value="sets" className="outline-none mt-0">
+          <SetOperations />
         </TabsContent>
       </Tabs>
     </div>
