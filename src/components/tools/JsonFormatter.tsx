@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Trash2, Minimize2, Maximize2 } from "lucide-react";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Editor from '@monaco-editor/react';
 
 export function JsonFormatter() {
     const [input, setInput] = useState("");
@@ -38,7 +40,7 @@ export function JsonFormatter() {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-200px)] min-h-[500px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full min-h-[600px]">
             <Card className="flex flex-col h-full">
                 <CardHeader className="flex flex-row items-center justify-between py-3">
                     <CardTitle className="text-sm font-medium">Input JSON</CardTitle>
@@ -47,11 +49,24 @@ export function JsonFormatter() {
                     </Button>
                 </CardHeader>
                 <CardContent className="flex-1 p-0 min-h-0 relative">
-                    <Textarea
-                        className="h-full w-full resize-none border-0 focus-visible:ring-0 rounded-none p-4 font-mono text-sm"
-                        placeholder="Paste your JSON here..."
+                    <Editor
+                        height="100%"
+                        defaultLanguage="json"
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(value) => setInput(value || "")}
+                        theme="light"
+                        options={{
+                            minimap: { enabled: false },
+                            fontSize: 14,
+                            lineNumbers: 'on',
+                            scrollBeyondLastLine: false,
+                            wordWrap: 'on',
+                            wrappingIndent: 'indent',
+                            automaticLayout: true,
+                            tabSize: 2,
+                            formatOnPaste: true,
+                            formatOnType: true,
+                        }}
                     />
                 </CardContent>
             </Card>
@@ -75,12 +90,24 @@ export function JsonFormatter() {
                     {error ? (
                         <div className="p-4 text-destructive font-mono text-sm">{error}</div>
                     ) : (
-                        <Textarea
-                            className="h-full w-full resize-none border-0 focus-visible:ring-0 rounded-none p-4 font-mono text-sm bg-transparent"
-                            readOnly
-                            value={output}
-                            placeholder="Formatted JSON will appear here..."
-                        />
+                        <div className="h-full w-full overflow-auto custom-scrollbar">
+                            <SyntaxHighlighter
+                                language="json"
+                                style={oneLight}
+                                customStyle={{
+                                    margin: 0,
+                                    padding: '1rem',
+                                    background: 'transparent',
+                                    fontSize: '0.875rem',
+                                    lineHeight: '1.5',
+                                    minHeight: '100%',
+                                }}
+                                wrapLines={true}
+                                wrapLongLines={true}
+                            >
+                                {output || ' '}
+                            </SyntaxHighlighter>
+                        </div>
                     )}
                 </CardContent>
             </Card>
