@@ -8,16 +8,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { Play, Pause, RefreshCw } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export function TimestampConverter() {
     const [now, setNow] = useState<number>(Math.floor(Date.now() / 1000));
     const [isPaused, setIsPaused] = useState(false);
 
-    const [tsInput, setTsInput] = useState("");
-    const [tsUnit, setTsUnit] = useState("s"); // s or ms
+    const [tsInput, setTsInput] = useLocalStorage("timestamp-ts-input", "");
+    const [tsUnit, setTsUnit] = useLocalStorage("timestamp-ts-unit", "s"); // s or ms
     const [tsResult, setTsResult] = useState("");
 
-    const [dateInput, setDateInput] = useState("");
+    const [dateInput, setDateInput] = useLocalStorage("timestamp-date-input", "");
     const [dateResult, setDateResult] = useState("");
 
     useEffect(() => {

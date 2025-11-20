@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Trash2, Calculator } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export function SetOperations() {
-    const [inputA, setInputA] = useState("");
-    const [inputB, setInputB] = useState("");
+    const [inputA, setInputA] = useLocalStorage("set-ops-input-a", "");
+    const [inputB, setInputB] = useLocalStorage("set-ops-input-b", "");
     const [onlyInA, setOnlyInA] = useState<string[]>([]);
     const [onlyInB, setOnlyInB] = useState<string[]>([]);
     const [inBoth, setInBoth] = useState<string[]>([]);

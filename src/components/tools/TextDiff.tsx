@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { diffLines, Change } from "diff";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export function TextDiff() {
-    const [oldText, setOldText] = useState("");
-    const [newText, setNewText] = useState("");
+    const [oldText, setOldText] = useLocalStorage("text-diff-old", "");
+    const [newText, setNewText] = useLocalStorage("text-diff-new", "");
     const [diffs, setDiffs] = useState<Change[]>([]);
 
     useEffect(() => {

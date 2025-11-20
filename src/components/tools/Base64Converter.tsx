@@ -6,13 +6,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Copy, Trash2 } from "lucide-react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export function Base64Converter() {
-    const [encodeInput, setEncodeInput] = useState("");
-    const [encodeOutput, setEncodeOutput] = useState("");
+    const [encodeInput, setEncodeInput] = useLocalStorage("base64-encode-input", "");
+    const [encodeOutput, setEncodeOutput] = useLocalStorage("base64-encode-output", "");
 
-    const [decodeInput, setDecodeInput] = useState("");
-    const [decodeOutput, setDecodeOutput] = useState("");
+    const [decodeInput, setDecodeInput] = useLocalStorage("base64-decode-input", "");
+    const [decodeOutput, setDecodeOutput] = useLocalStorage("base64-decode-output", "");
 
     const handleEncode = () => {
         try {

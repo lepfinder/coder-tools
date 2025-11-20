@@ -1,10 +1,19 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { JsonFormatter } from "@/components/tools/JsonFormatter";
 import { TimestampConverter } from "@/components/tools/TimestampConverter";
 import { Base64Converter } from "@/components/tools/Base64Converter";
 import { TextDiff } from "@/components/tools/TextDiff";
 import { SetOperations } from "@/components/tools/SetOperations";
-import { FileJson, Clock, Binary, FileDiff, Network } from "lucide-react";
+import { NginxFormatter } from "@/components/tools/NginxFormatter";
+import { FileJson, Clock, Binary, FileDiff, Network, Server, CalendarClock } from "lucide-react";
+
+const CronGenerator = dynamic(
+  () => import("@/components/tools/CronGenerator").then((mod) => ({ default: mod.CronGenerator })),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
@@ -18,7 +27,7 @@ export default function Home() {
 
       <Tabs defaultValue="json" className="w-full space-y-6">
         <div className="flex justify-center">
-          <TabsList className="grid w-full max-w-3xl grid-cols-2 md:grid-cols-5 h-auto p-1">
+          <TabsList className="grid w-full max-w-5xl grid-cols-3 md:grid-cols-7 h-auto p-1">
             <TabsTrigger value="json" className="py-2 gap-2">
               <FileJson className="h-4 w-4" />
               <span className="hidden sm:inline">JSON Format</span>
@@ -44,6 +53,16 @@ export default function Home() {
               <span className="hidden sm:inline">Set Ops</span>
               <span className="sm:hidden">Sets</span>
             </TabsTrigger>
+            <TabsTrigger value="nginx" className="py-2 gap-2">
+              <Server className="h-4 w-4" />
+              <span className="hidden sm:inline">Nginx</span>
+              <span className="sm:hidden">NGX</span>
+            </TabsTrigger>
+            <TabsTrigger value="cron" className="py-2 gap-2">
+              <CalendarClock className="h-4 w-4" />
+              <span className="hidden sm:inline">Cron</span>
+              <span className="sm:hidden">Cron</span>
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -65,6 +84,14 @@ export default function Home() {
 
         <TabsContent value="sets" className="outline-none mt-0">
           <SetOperations />
+        </TabsContent>
+
+        <TabsContent value="nginx" className="outline-none mt-0">
+          <NginxFormatter />
+        </TabsContent>
+
+        <TabsContent value="cron" className="outline-none mt-0">
+          <CronGenerator />
         </TabsContent>
       </Tabs>
     </div>
